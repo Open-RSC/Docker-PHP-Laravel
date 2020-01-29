@@ -5,6 +5,7 @@ RUN apt-get update && \
         libmemcached-dev \
         libz-dev \
         libzip-dev \
+        zip \
         zlib1g-dev \
         libpq-dev \
         libjpeg-dev \
