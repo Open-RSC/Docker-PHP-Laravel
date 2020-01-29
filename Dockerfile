@@ -4,6 +4,8 @@ RUN apt-get update && \
     apt-get install -y --force-yes --no-install-recommends \
         libmemcached-dev \
         libz-dev \
+        libzip-dev \
+        zlib1g-dev \
         libpq-dev \
         libjpeg-dev \
         libpng-dev \
@@ -32,7 +34,6 @@ RUN docker-php-ext-enable mcrypt
 RUN docker-php-ext-install pcntl
 
 # Install the PHP zip extention
-RUN docker-php-ext-configure zip --with-libzip=/usr/include
 RUN docker-php-ext-install zip
 
 # Install the PHP pdo_mysql extention
