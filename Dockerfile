@@ -32,7 +32,8 @@ RUN docker-php-ext-enable mcrypt
 RUN docker-php-ext-install pcntl
 
 # Install the PHP zip extention
-RUN apk add --no-cache libzip-dev && docker-php-ext-configure zip --with-libzip=/usr/include && docker-php-ext-install zip
+RUN docker-php-ext-configure zip --with-libzip=/usr/include
+RUN docker-php-ext-install zip
 
 # Install the PHP pdo_mysql extention
 RUN docker-php-ext-install pdo_mysql
