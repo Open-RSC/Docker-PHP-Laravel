@@ -112,7 +112,7 @@ RUN mv security-checker.phar /usr/local/bin/security-checker
 #####################################
 
 # Node.js
-RUN curl -sL https://deb.nodesource.com/setup_11.x -o nodesource_setup.sh
+RUN curl -sL https://deb.nodesource.com/setup_13.x -o nodesource_setup.sh
 RUN bash nodesource_setup.sh
 RUN apt-get install nodejs -y
 RUN npm install
