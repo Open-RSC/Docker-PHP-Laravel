@@ -1,7 +1,9 @@
 FROM php:7.4.2-fpm
 
 RUN apt-get update && \
-    apt-get install -y --force-yes --no-install-recommends \
+    apt-get upgrade -y && \
+    apt-get autoremove -y && \
+    apt-get install -y --no-install-recommends \
         libmemcached-dev \
         libz-dev \
         libzip-dev \
@@ -25,11 +27,16 @@ RUN apt-get update && \
         git \
         gnupg1 \
         gnupg2 \
-        gnupg
+        gnupg \
+        apt-utils
 
 # Install the PHP mcrypt extention (from PECL, mcrypt has been removed from PHP 7.2)
-RUN pecl install mcrypt-1.0.3
+RUN pecl install mcrypt
 RUN docker-php-ext-enable mcrypt
+
+# Install Imagemagick
+RUN apt-get install -y imagemagick
+RUN ldconfig /usr/local/lib
 
 # Install the PHP pcntl extention
 RUN docker-php-ext-install pcntl
