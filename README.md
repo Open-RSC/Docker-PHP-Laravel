@@ -5,3 +5,6 @@ To update: edit the Dockerfile and change the PHP-FPM tag to the most recent sho
 https://hub.docker.com/_/php
 
 "FROM php:7.2-fpm"
+
+
+This version is for PHP 7.4
