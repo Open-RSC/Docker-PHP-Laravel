@@ -1,9 +1,7 @@
-FROM php:7.4.2-fpm
+FROM php:8.0.1-fpm
 
 RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get autoremove -y && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y --force-yes --no-install-recommends \
         libmemcached-dev \
         libz-dev \
         libzip-dev \
@@ -27,16 +25,11 @@ RUN apt-get update && \
         git \
         gnupg1 \
         gnupg2 \
-        gnupg \
-        apt-utils
+        gnupg
 
 # Install the PHP mcrypt extention (from PECL, mcrypt has been removed from PHP 7.2)
-RUN pecl install mcrypt
+RUN pecl install mcrypt-1.0.4
 RUN docker-php-ext-enable mcrypt
-
-# Install Imagemagick
-RUN apt-get install -y imagemagick
-RUN ldconfig /usr/local/lib
 
 # Install the PHP pcntl extention
 RUN docker-php-ext-install pcntl
@@ -62,15 +55,6 @@ RUN docker-php-ext-enable pdo_mysql
 
 # Install the PHP gd library
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-
-#####################################
-# xDebug:
-#####################################
-
-# Install the xdebug extension
-RUN pecl install xdebug && docker-php-ext-enable xdebug
-# Copy xdebug configration for remote debugging
-COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 #####################################
 # PHP Memcached:
@@ -119,7 +103,7 @@ RUN mv security-checker.phar /usr/local/bin/security-checker
 #####################################
 
 # Node.js
-RUN curl -sL https://deb.nodesource.com/setup_13.x -o nodesource_setup.sh
+RUN curl -sL https://deb.nodesource.com/setup_15.x -o nodesource_setup.sh
 RUN bash nodesource_setup.sh
 RUN apt-get install nodejs -y
 RUN npm install
@@ -142,8 +126,6 @@ RUN composer global require "laravel/installer"
 # Final Touch
 #--------------------------------------------------------------------------
 #
-
-ADD ./laravel.ini /usr/local/etc/php/conf.d
 
 #####################################
 # Aliases:
